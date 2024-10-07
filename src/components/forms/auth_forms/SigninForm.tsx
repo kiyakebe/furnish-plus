@@ -1,16 +1,20 @@
 "use client";
+
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { success_toast } from "@/components/toastify/Toastify";
+import { error_toast, success_toast } from "@/components/toastify/Toastify";
+import { signIn, useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
+
+import axios from "axios";
 
 const schema = z.object({
-  email: z
+  username: z
     .string({
       required_error: "Email field is required",
       invalid_type_error: "Name must be a string",
     })
-    .email({ message: "Invalid Email" })
     .toLowerCase(),
   password: z
     .string({
@@ -24,15 +28,49 @@ const schema = z.object({
 type FormData = z.infer<typeof schema>;
 
 const SigninForm = () => {
+  const session = useSession();
+  const router = useRouter();
+
+  if (session?.data) {
+    axios
+      .post(`https://sanoysi2.pythonanywhere.com/auth/jwt/verify`, {
+        token: session.data.accessToken,
+      })
+      .then((res) => {
+        if (res.status === 200) {
+          router.back();
+        }
+      });
+  }
+
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm<FormData>({ resolver: zodResolver(schema) });
 
-  const onSubmit = (data: FormData) => {
-    console.log(data);
-    success_toast("Email sent successfully");
+  const onSubmit = async (data: FormData) => {
+    try {
+      const result = await signIn("credentials", {
+        redirect: false,
+        username: data.username,
+        password: data.password,
+      });
+
+      if (!result?.ok) {
+        error_toast(result?.error || "Something went wrong!");
+      }
+
+      if (result?.ok) {
+        success_toast("Login Success!");
+
+        const parsedUrl = new URL(result?.url || "/");
+        const callbackUrl = parsedUrl.searchParams.get("callbackUrl");
+        router.push(callbackUrl || "/");
+      }
+    } catch (error) {
+      error_toast("Something went wrong!");
+    }
   };
 
   return (
@@ -44,20 +82,20 @@ const SigninForm = () => {
 
       <div className="mb-5">
         <label
-          htmlFor="email"
+          htmlFor="username"
           className="block mb-2 text-sm font-medium text-gray-900"
         >
-          Email
+          Username
         </label>
         <input
-          type="email"
-          id="email"
+          type="text"
+          id="username"
           className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-          placeholder="email@somewhere.com"
-          {...register("email")}
+          placeholder="username"
+          {...register("username")}
         />
-        {errors.email && (
-          <p className="text-red-500 text-sm">{errors.email.message}</p>
+        {errors.username && (
+          <p className="text-red-500 text-sm">{errors.username.message}</p>
         )}
       </div>
 
@@ -88,7 +126,7 @@ const SigninForm = () => {
       </button>
       <div className="my-4 text-sm">
         <p>
-          Don't have account?{" "}
+          Don&apos;t have account?{" "}
           <a href="/api/auth/signup" className="text-violet-700">
             create
           </a>{" "}

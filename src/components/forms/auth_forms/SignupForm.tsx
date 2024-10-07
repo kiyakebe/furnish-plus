@@ -4,8 +4,9 @@ import { useForm, FieldValues } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 
-import { success_toast } from "@/components/toastify/Toastify";
-import { data } from "framer-motion/client";
+import { error_toast, success_toast } from "@/components/toastify/Toastify";
+import axios from "axios";
+import { useRouter } from "next/navigation";
 
 const schema = z
   .object({
@@ -22,6 +23,13 @@ const schema = z
       })
       .min(4, {
         message: "Last Name has to be at least 4 characters",
+      }),
+    username: z
+      .string({
+        required_error: "Username field is require",
+      })
+      .min(4, {
+        message: "Username has to be at least 4 characters",
       }),
     email: z
       .string({
@@ -52,6 +60,8 @@ const schema = z
 type FormData = z.infer<typeof schema>;
 
 const SignupForm = () => {
+  const router = useRouter();
+
   const {
     register,
     handleSubmit,
@@ -59,7 +69,16 @@ const SignupForm = () => {
   } = useForm<FormData>({ resolver: zodResolver(schema) });
 
   const onSubmit = (data: FieldValues) => {
-    success_toast("Email sent successfully");
+    axios
+      .post(`https://sanoysi2.pythonanywhere.com/auth/users/`, data)
+      .then((res) => {
+        success_toast(res.statusText || "Registration Success");
+        router.push("/api/auth/signin");
+      })
+      .catch((error) => {
+        error_toast(error.message || "Something went wrong");
+        console.log(error);
+      });
   };
 
   return (
@@ -71,14 +90,14 @@ const SignupForm = () => {
 
       <div className="mb-5">
         <label
-          htmlFor="name"
+          htmlFor="fname"
           className="block mb-2 text-sm font-medium text-gray-900"
         >
           First Name
         </label>
         <input
-          type="name"
-          id="name"
+          type="text"
+          id="fname"
           className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5
         "
           placeholder="John Doe"
@@ -88,17 +107,17 @@ const SignupForm = () => {
           <p className="text-red-500 text-sm">{errors.first_name.message}</p>
         )}
       </div>
-      
+
       <div className="mb-5">
         <label
-          htmlFor="name"
+          htmlFor="lname"
           className="block mb-2 text-sm font-medium text-gray-900"
         >
           Last Name
         </label>
         <input
-          type="name"
-          id="name"
+          type="text"
+          id="lname"
           className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5
         "
           placeholder="John Doe"
@@ -106,6 +125,26 @@ const SignupForm = () => {
         />
         {errors.last_name && (
           <p className="text-red-500 text-sm">{errors.last_name.message}</p>
+        )}
+      </div>
+
+      <div className="mb-5">
+        <label
+          htmlFor="name"
+          className="block mb-2 text-sm font-medium text-gray-900"
+        >
+          User Name
+        </label>
+        <input
+          type="text"
+          id="username"
+          className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5
+        "
+          placeholder="username"
+          {...register("username")}
+        />
+        {errors.username && (
+          <p className="text-red-500 text-sm">{errors.username.message}</p>
         )}
       </div>
 
@@ -127,7 +166,7 @@ const SignupForm = () => {
           <p className="text-red-500 text-sm">{errors.email.message}</p>
         )}
       </div>
-     
+
       <div className="mb-5">
         <label
           htmlFor="name"

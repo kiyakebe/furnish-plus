@@ -8,8 +8,7 @@ declare module "next-auth" {
     refreshToken: string;
     name: string;
     email: string;
-    role: string;
-    profileComplete: boolean;
+    username: string
   }
   interface Session {
     accessToken: string;

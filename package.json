@@ -12,6 +12,7 @@
     "@hookform/resolvers": "^3.9.0",
     "@nextui-org/react": "^2.4.8",
     "axios": "^1.7.7",
+    "e-commerce": "file:",
     "framer-motion": "^11.11.1",
     "next": "14.2.14",
     "next-auth": "^4.24.8",
@@ -32,4 +33,3 @@
     "typescript": "^5"
   }
 }
-

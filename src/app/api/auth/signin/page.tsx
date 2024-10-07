@@ -1,4 +1,5 @@
 import SigninForm from "@/components/forms/auth_forms/SigninForm";
+import AuthProvider from "@/Providers/AuthProvider";
 
 const Page = () => {
   return (
@@ -11,8 +12,10 @@ const Page = () => {
         />
       </div>
 
-      <div className="lg:w-1/2 lg:my-10 shrink-0 bg-violet-700 h-[100%] border lg:border-0 rounded-lg flex items-center justify-center">
-        <SigninForm />
+      <div className="w-full mx-20 md:mx-auto md:w-2/3 lg:w-1/2 lg:my-10 h-[100%] border lg:border-0 rounded-lg flex items-center justify-center">
+        <AuthProvider>
+          <SigninForm />
+        </AuthProvider>
       </div>
     </div>
   );
