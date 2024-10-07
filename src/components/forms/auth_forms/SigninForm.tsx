@@ -68,7 +68,8 @@ const SigninForm = () => {
         const callbackUrl = parsedUrl.searchParams.get("callbackUrl");
         router.push(callbackUrl || "/");
       }
-    } catch (error) {
+    } catch (errors) {
+      console.log(errors);
       error_toast("Something went wrong!");
     }
   };

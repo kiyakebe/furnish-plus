@@ -47,8 +47,7 @@ export const authOptions: NextAuthOptions = {
               username: user_data_json.username,
               accessToken: user.access,
               refreshToken: user.refresh,
-              name:
-                user_data_json.first_name + user_data_json.last_name,
+              name: user_data_json.first_name + user_data_json.last_name,
               message: user.message,
               success: user.success,
               role: user.role,
@@ -61,9 +60,9 @@ export const authOptions: NextAuthOptions = {
   ],
   secret: process.env.NEXTAUTH_SECRET as string,
   callbacks: {
-    async signIn({ credentials }) {
+    async signIn() {
       // console.log("credentials looooooooooooooooooooooooooog", credentials);
-      
+
       return true;
     },
     async jwt({ token, user }) {

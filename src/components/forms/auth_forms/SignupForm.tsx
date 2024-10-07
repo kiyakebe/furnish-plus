@@ -77,7 +77,6 @@ const SignupForm = () => {
       })
       .catch((error) => {
         error_toast(error.message || "Something went wrong");
-        console.log(error);
       });
   };
 
