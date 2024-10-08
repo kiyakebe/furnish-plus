@@ -76,94 +76,99 @@ const SignupForm = () => {
         router.push("/api/auth/signin");
       })
       .catch((error) => {
+        console.log(error);
         error_toast(error.message || "Something went wrong");
       });
   };
 
   return (
     <form
-      className="mx-auto bg-slate-50 p-5 rounded-md w-full lg:w-3/4"
+      className="mx-auto bg-slate-50 p-5 rounded-md w-full"
       onSubmit={handleSubmit(onSubmit)}
     >
       <h2 className="mb-4 font-semibold text-lg">Register</h2>
 
-      <div className="mb-5">
-        <label
-          htmlFor="fname"
-          className="block mb-2 text-sm font-medium text-gray-900"
-        >
-          First Name
-        </label>
-        <input
-          type="text"
-          id="fname"
-          className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5
+      <div className="lg:flex gap-5">
+        <div className="mb-5 lg:w-1/2">
+          <label
+            htmlFor="fname"
+            className="block mb-2 text-sm font-medium text-gray-900"
+          >
+            First Name
+          </label>
+          <input
+            type="text"
+            id="fname"
+            className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5
         "
-          placeholder="John Doe"
-          {...register("first_name")}
-        />
-        {errors.first_name && (
-          <p className="text-red-500 text-sm">{errors.first_name.message}</p>
-        )}
+            placeholder="John Doe"
+            {...register("first_name")}
+          />
+          {errors.first_name && (
+            <p className="text-red-500 text-sm">{errors.first_name.message}</p>
+          )}
+        </div>
+
+        <div className="mb-5 lg:w-1/2">
+          <label
+            htmlFor="lname"
+            className="block mb-2 text-sm font-medium text-gray-900"
+          >
+            Last Name
+          </label>
+          <input
+            type="text"
+            id="lname"
+            className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5
+        "
+            placeholder="John Doe"
+            {...register("last_name")}
+          />
+          {errors.last_name && (
+            <p className="text-red-500 text-sm">{errors.last_name.message}</p>
+          )}
+        </div>
       </div>
 
-      <div className="mb-5">
-        <label
-          htmlFor="lname"
-          className="block mb-2 text-sm font-medium text-gray-900"
-        >
-          Last Name
-        </label>
-        <input
-          type="text"
-          id="lname"
-          className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5
+      <div className="lg:flex gap-5">
+        <div className="mb-5 lg:w-1/2">
+          <label
+            htmlFor="name"
+            className="block mb-2 text-sm font-medium text-gray-900"
+          >
+            User Name
+          </label>
+          <input
+            type="text"
+            id="username"
+            className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5
         "
-          placeholder="John Doe"
-          {...register("last_name")}
-        />
-        {errors.last_name && (
-          <p className="text-red-500 text-sm">{errors.last_name.message}</p>
-        )}
-      </div>
+            placeholder="username"
+            {...register("username")}
+          />
+          {errors.username && (
+            <p className="text-red-500 text-sm">{errors.username.message}</p>
+          )}
+        </div>
 
-      <div className="mb-5">
-        <label
-          htmlFor="name"
-          className="block mb-2 text-sm font-medium text-gray-900"
-        >
-          User Name
-        </label>
-        <input
-          type="text"
-          id="username"
-          className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5
-        "
-          placeholder="username"
-          {...register("username")}
-        />
-        {errors.username && (
-          <p className="text-red-500 text-sm">{errors.username.message}</p>
-        )}
-      </div>
-
-      <div className="mb-5">
-        <label
-          htmlFor="name"
-          className="block mb-2 text-sm font-medium text-gray-900"
-        >
-          Email
-        </label>
-        <input
-          type="email"
-          id="email"
-          className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-          placeholder="email@somewhere.com"
-          {...register("email")}
-        />
-        {errors.email && (
-          <p className="text-red-500 text-sm">{errors.email.message}</p>
-        )}
+        <div className="mb-5 lg:w-1/2">
+          <label
+            htmlFor="name"
+            className="block mb-2 text-sm font-medium text-gray-900"
+          >
+            Email
+          </label>
+          <input
+            type="email"
+            id="email"
+            className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+            placeholder="email@somewhere.com"
+            {...register("email")}
+          />
+          {errors.email && (
+            <p className="text-red-500 text-sm">{errors.email.message}</p>
+          )}
+        </div>
       </div>
 
       <div className="mb-5">
