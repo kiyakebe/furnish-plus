@@ -11,15 +11,21 @@
   "dependencies": {
     "@hookform/resolvers": "^3.9.0",
     "@nextui-org/react": "^2.4.8",
+    "@radix-ui/react-slot": "^1.1.0",
     "axios": "^1.7.7",
+    "class-variance-authority": "^0.7.0",
+    "clsx": "^2.1.1",
     "e-commerce": "file:",
     "framer-motion": "^11.11.1",
+    "lucide-react": "^0.453.0",
     "next": "14.2.14",
     "next-auth": "^4.24.8",
     "react": "^18",
     "react-dom": "^18",
     "react-hook-form": "^7.53.0",
     "react-toastify": "^10.0.5",
+    "tailwind-merge": "^2.5.4",
+    "tailwindcss-animate": "^1.0.7",
     "zod": "^3.23.8"
   },
   "devDependencies": {

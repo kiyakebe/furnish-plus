@@ -38,7 +38,7 @@ const SigninForm = () => {
       })
       .then((res) => {
         if (res.status === 200) {
-          router.back();
+          router.push("/");
         }
       });
   }
@@ -63,9 +63,9 @@ const SigninForm = () => {
 
       if (result?.ok) {
         success_toast("Login Success!");
-
         const parsedUrl = new URL(result?.url || "/");
         const callbackUrl = parsedUrl.searchParams.get("callbackUrl");
+
         router.push(callbackUrl || "/");
       }
     } catch (errors) {
