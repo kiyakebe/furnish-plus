@@ -59,11 +59,13 @@ export const authOptions: NextAuthOptions = {
     }),
   ],
   secret: process.env.NEXTAUTH_SECRET as string,
+  
   pages: {
     signIn: '/login',
     signOut: '/logout',
     error: '/error'
   },
+
   callbacks: {
     async signIn() {
       // console.log("credentials looooooooooooooooooooooooooog", credentials);
