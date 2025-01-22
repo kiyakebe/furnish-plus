@@ -1,7 +1,12 @@
 import SigninForm from "@/components/forms/auth_forms/SigninForm";
 import AuthProvider from "@/Providers/AuthProvider";
+import { useRouter } from "next/router";
 
 const Page = () => {
+
+  const router = useRouter();
+  router.push("/");
+
   return (
     <div className="w-[100vw] min-h-[100vh] lg:h-[100vh] flex flex-col lg:flex-row items-center lg:justify-center gap-10 lg:gap-28 p-10 lg:p-40 lg:py-10 bg-slate">
       <div className="lg:w-1/2 grow-0">
